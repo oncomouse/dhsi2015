@@ -13,7 +13,7 @@ function deform() {
 		if((current_fragment + " " + word).length <= fragment_length) {
 			current_fragment += " " + word;
 		} else {
-			fragments.push(sprintf("%-20s", current_fragment));
+			fragments.push(sprintf("%s", current_fragment.toLowerCase().trim())); // "%-20s"
 			if (word.length <= fragment_length) {
 				current_fragment = word;
 			}
