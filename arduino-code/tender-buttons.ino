@@ -1,3 +1,28 @@
+/*
+  Sixth Dimensional Stein
+  
+  We put Gertrude Stein in a box.
+  
+  The circuit:
+ * LCD RS pin to digital pin 12
+ * LCD Enable pin to digital pin 11
+ * LCD D4 pin to digital pin 5
+ * LCD D5 pin to digital pin 4
+ * LCD D6 pin to digital pin 3
+ * LCD D7 pin to digital pin 2
+ * LCD R/W pin to ground
+ * 10K resistor:
+   * ends to +5V and ground
+   * wiper to LCD VO pin
+ * servo motor:
+   * ends to +5V and gorund
+   * connected to digital pin 9
+ * touch sensor:
+   * ends to +5V and gorund
+   * connected to digital pin 10
+ */
+
+// Array of 20 character fragments:
 char* lines[] = {
   "Out of kindness     ",
   "comes redness and   ",
@@ -79,31 +104,57 @@ char* lines[] = {
   "is grey that is not ",
   "dusty and red shows "
 };
-const int lineSize = 80;
-const int touchPin = 10;
+// Length of the array (may be able to calculate this):
+const int lineSize = 80; // sizeof(lines) / (20 * sizeof(char));
 
+// Pin Addresses:
+const int touchPin = 10;
+const int servoPin = 9;
+
+// How fast to open the box:
+const int boxStep = 30;
+const int boxPosition[] = {0,90};
+
+// LCD dimensions:
+const int lcdSize[] = {20,4};
+
+// Configure the LCD:
 #include <LiquidCrystal.h>
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+// Initialize the servo:
 #include <Servo.h>
 Servo myservo;
 
 void setup() {
-  // put your setup code here, to run once:
+  // Seed the random number generator:
   randomSeed(analogRead(0));
-  lcd.begin(20, 4);
-  myservo.attach(9);
+
+  // Initialize the LCD:
+  lcd.begin(lcdSize[0], lcdSize[1]);
+  
+  // Position the servo:
+  myservo.attach(servoPin);
+  myservo.write(boxPosition[0]);
+  
+  // Initialize the touch sensor:
   pinMode(touchPin, INPUT);
-  myservo.write(0);
+  
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+
+  // If the touch sensor is HIGH:
   if(digitalRead(touchPin) == HIGH) {
-    for(int i=0;i<=90;i++) {
+    // Open the box:
+    for(int i=boxPosition[0];i<=boxPosition[1];i++) {
       myservo.write(i);
-      delay(30);
+      delay(boxStep);
     }
+    // Turn on the LCD:
     lcd.display();
+    
+    // Write the four random lines:
     lcd.setCursor(0, 0);
     lcd.print(lines[random(lineSize)]);
     lcd.setCursor(0, 1);
@@ -112,13 +163,16 @@ void loop() {
     lcd.print(lines[random(lineSize)]); 
     lcd.setCursor(0, 3);
     lcd.print(lines[random(lineSize)]);
+    
+    // Display the poem until the touch sensor goes to LOW:
     do {
       delay(5);
     } while(digitalRead(touchPin) == HIGH);
     
-    for(int i=90;i>=0;i--) {
+    // Close the box:
+    for(int i=boxPosition[1];i>=boxPosition[0];i--) {
       myservo.write(i);
-      delay(30);
+      delay(boxStep);
     }
     lcd.noDisplay();
   }
