@@ -2,16 +2,16 @@
 
 This project, by [Margaret Konkol](https://twitter.com/mekonkol) and [Andrew Pilsch](https://twitter.com/oncomouse), responds to course themes in our [DHSI 2015 Physical Computing course](https://github.com/uvicmakerlab/dhsi2015/blob/master/index.md) by placing Gertrude Stein in a box. 
 
-Sourcing one of Stein's object poems from *Tender Buttons*, we scrambled "Box" into its ideal format, a six dimensional space. By pressing a "tender button" our box opens and draws the user into a six dimensional space. Translating the object-description-method Stein employs in which associations wrap around objects creating dense meshworks of social, political and idiosyncratic description we have given "Box" its fully realized dimensional exhibition space. Nolonger is the poem locked to linear parsing. Instead, each press of the tender button scrambles and reorders the poem as if the user is reading the poem as a space, looking at one word on the right facing box wall, and then, say, looking at the adjacent box wall. "Box" becomes its own object, triggering for the user new social, political personal meshworks. 
+Sourcing one of Stein's object poems from *Tender Buttons*, we scrambled "Box" into its ideal format, a six dimensional space. By pressing a "tender button" our box opens and draws the user into a six dimensional space. Translating the object-description-method Stein employs in which associations wrap around objects creating dense meshworks of social, political and idiosyncratic description we have given "Box" its fully realized dimensional exhibition space. No longer is the poem locked to linear parsing. Instead, each press of the tender button scrambles and reorders the poem as if the user is reading the poem as a space, looking at one word on the right facing box wall, and then, say, looking at the adjacent box wall. "Box" becomes its own object, triggering for the user new social, political, personal meshworks. 
 
 ## Sample Output
+
+Here's one run of the program:
 
 > doubling left open  
 > is different and  
 > outward recognition  
 > necessary when a box
-
-Using an Arduino, we created a device (source code in `arduino-code`) that opens a box, displays a random poem built from Stein's *Tender Buttons*, and then, when the user loses interest, destroys the poem.
 
 ## Sources
 
@@ -44,6 +44,8 @@ And:
 We used a JavaScript lexer called [jspos](https://code.google.com/p/jspos/) to break the text into single words. We then assembled these words into fragments that were 20 characters or fewer (`lexing-tender-buttons/tender-buttons.js` for the source code; `lexing-tender-buttons/tender-buttons.html` for the compiled program).
 
 ## The Arduino Program
+
+We created a circuit (source code in `arduino-code`) that opens a box, displays a random poem built from Stein's *Tender Buttons*, and then, when the user loses interest, destroys the poem.
 
 From the lexer, we built an Arduino program (`arduino-code/tender-buttons.ino`) that contained the fragments, and some simple logic to:
 
