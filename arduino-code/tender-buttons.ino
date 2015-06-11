@@ -116,7 +116,7 @@ char* lines[] = {
   "means that white is"
 };
 // Length of the array (may be able to calculate this):
-const int lineSize = 90; // sizeof(lines) / (20 * sizeof(char));
+const int lineSize = 90;
 
 // Pin Addresses:
 const int touchPin = 10;
